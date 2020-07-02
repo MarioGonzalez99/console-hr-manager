@@ -53,7 +53,8 @@ public class UserThread extends Thread{
             try {
                 //Prueba de conexion a la base de datos
                 LOG.info("Prueba de conexion a la base de datos");
-                Connection conn = ConnectionDB.openConnection(username, password);
+                ConnectionDB.loadConnection(username, password);
+                Connection conn = ConnectionDB.openConnection();
                 out.println("Se accedio correctamente al Sistema #"
                         + "Se le enviara un codigo a su correo para poder verificar su identidad #"
                         + "Por favor, digite su correo electronico");
