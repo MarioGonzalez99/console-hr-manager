@@ -7,7 +7,7 @@ package app.echolab.main;
 
 import app.echolab.connection.ConnectionDB;
 import app.echolab.utilities.Auth;
-import java.sql.Connection;
+import java.sql.*;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -50,14 +50,28 @@ public class UserThread extends Thread{
             out.println("Por favor, ingrese su contraseña: ");
             String password = in.readLine();
             LOG.info("Ingreso de contraseña");
+            ConnectionDB.loadConnection(username, password);
+            boolean isAdmin = false;
             try {
                 //Prueba de conexion a la base de datos
                 LOG.info("Prueba de conexion a la base de datos");
-                ConnectionDB.loadConnection(username, password);
-                Connection conn = ConnectionDB.openConnection();
+                Connection conn = ConnectionDB.getInstance().openConnection();
                 out.println("Se accedio correctamente al Sistema #"
                         + "Se le enviara un codigo a su correo para poder verificar su identidad #"
                         + "Por favor, digite su correo electronico");
+                try (Statement st = conn.createStatement(); 
+                    // Verificar los permisos del usuario
+                    ResultSet rs = st.executeQuery("SHOW GRANTS FOR '"+username+"'@'localhost';")) {
+                    while(rs.next()){
+                        String str = rs.getString(1);
+                        isAdmin = str.contains("ALL");
+                    }
+                    if(isAdmin){
+                        System.out.println("Es un DB Admin");
+                    } else{
+                        System.out.println("No es un admin");
+                    }
+                }
                 ConnectionDB.closeConnection(conn);
             } catch (SQLException ex) {
                 //En caso que no se pueda conectar a la base de datos se procede a sacar al usuario del sistema
@@ -91,26 +105,91 @@ public class UserThread extends Thread{
             
             //Luego de las verificaciones correspondientes ingresamos al menu del programa
             LOG.info("Ingreso al menu del programa");
-            out.println("Ha ingresado correctamente al sistema, que operacion desea realizar?");
+            
             String inputLine;
             boolean activeFlag = true;
             while (activeFlag&&clientSocket.isConnected()){
                 if((inputLine=in.readLine())!= null){
-                    System.out.println("--->"+inputLine);
-                    switch(inputLine.trim()){
-                        case "hello server":
-                            out.println("hello client");
-                            break;
-                        case ".":
-                            out.println("good bye");
-                            activeFlag = false;
-                            break;
-                        case ".Exit":
-                            out.println("good bye");
-                            activeFlag = false;
-                            break;
-                        default:
-                            out.println("unrecognized command");
+                    if(isAdmin){
+                        //Menu para el administrador
+                        out.println("Ha ingresado correctamente al sistema como Administrador #"
+                                + "Que accion deseas realizar? #"
+                                + "1. Gestion de departamentos #"
+                                + "2. Gestion de estados de empleados #"
+                                + "3. Gestion de usuarios #"
+                                + "4. Gestion de roles #"
+                                + "5. Salir del programa");
+                        System.out.println("--->"+inputLine);
+                        switch(inputLine.trim()){
+                            case "1":
+                                out.println("Ha seleccionado Gestion de departamentos");
+                                break;
+                            case "2":
+                                out.println("Ha seleccionado Gestion de estados de empleados");
+                                break;
+                            case "3":
+                                out.println("Ha seleccionado Gestion de usuarios");
+                                break;
+                            case "4":
+                                out.println("Ha seleccionado Gestion de roles");
+                                break;
+                            case "5":
+                                out.println("Ha seleccionado Salir del programa #"
+                                        + "A continuacion, saldra del programa #"
+                                        + "Tenga un buen dia");
+                                activeFlag = false;
+                                break;
+                            default:
+                                out.println("La opcion seleccionada es invalida, intente nuevamente");
+                        }
+                    } else{
+                        //Menu para usuario de RRHH
+                        out.println("Ha ingresado correctamente al sistema como agente de RRHH #"
+                                + "Que accion deseas realizar? #"
+                                + "1. Actualización de datos del empleado #"
+                                + "2. Desactivación de empleados por despido #"
+                                + "3. Contratación de empleados #"
+                                + "4. Asignación de departamento #"
+                                + "5. Asignación de Jefaturas #"
+                                + "6. Actualización de salario mensual #"
+                                + "7. Visualización de pagos generados #"
+                                + "8. Generación de pagos en planilla"
+                                + "9. Salir del sistema");
+                       System.out.println("--->"+inputLine);
+                        switch(inputLine.trim()){
+                            case "1":
+                                out.println("Ha seleccionado Actualización de datos del empleado");
+                                break;
+                            case "2":
+                                out.println("Ha seleccionado Desactivación de empleados por despido");
+                                break;
+                            case "3":
+                                out.println("Ha seleccionado Contratación de empleados");
+                                break;
+                            case "4":
+                                out.println("Ha seleccionado Asignación de departamento");
+                                break;
+                            case "5":
+                                out.println("Ha seleccionado Asignación de Jefaturas");
+                                break;
+                            case "6":
+                                out.println("Ha seleccionado Actualización de salario mensual");
+                                break;
+                            case "7":
+                                out.println("Ha seleccionado Visualización de pagos generados");
+                                break;
+                            case "8":
+                                out.println("Ha seleccionado Generación de pagos en planilla");
+                                break;
+                            case "9":
+                                out.println("Ha seleccionado Salir del programa #"
+                                        + "A continuacion, saldra del programa #"
+                                        + "Tenga un buen dia");
+                                activeFlag = false;
+                                break;
+                            default:
+                                out.println("La opcion seleccionada es invalida, intente nuevamente");
+                        } 
                     }
                 }
             }
