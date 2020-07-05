@@ -29,6 +29,7 @@ public class Main {
         //Creamos las propiedades para mantener el programa activo en el servidor
         LOG.info("Creacion de propiedad active con valor true");
         Properties prop = new Properties();
+        
         //Al iniciar el programa la propiedad active se establecera como true
         prop.setProperty("active", "true");
         File fProperties = new File(CONFIGURATION_FILE);
@@ -38,6 +39,7 @@ public class Main {
            fProperties.createNewFile();
            fProperties = null;
         }
+        
         //Creamos un outputStream para escribir las propiedades establecidas previamente al fichero externo de propiedades
         LOG.info("Creacion de outputStream con destino al fichero de propiedades");
         FileOutputStream outputStream = new FileOutputStream(CONFIGURATION_FILE);

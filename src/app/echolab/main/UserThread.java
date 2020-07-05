@@ -6,18 +6,21 @@
 package app.echolab.main;
 
 import app.echolab.properties.ConfigProperties;
+import app.echolab.utilities.AdminMenu;
 import app.echolab.utilities.Auth;
 import app.echolab.utilities.Decrypt;
-import app.echolab.utilities.Menu;
+import app.echolab.utilities.UserMenu;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
 import java.net.SocketException;
+import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import java.time.LocalDate;
 import org.apache.commons.mail.EmailException;
 import org.slf4j.LoggerFactory;
 
@@ -69,6 +72,7 @@ public class UserThread extends Thread{
             }
             
             if(isValidUser){
+                /*
                 LOG.info("Es un usuario valido");
                 //Almacenamos el email del usuario para enviarle un codigo de autenticacion
                 LOG.info("Ingreso de email del usuario");
@@ -94,20 +98,20 @@ public class UserThread extends Thread{
                 LOG.info("Ingreso de codigo de autenticacion");     
                 if(!in.readLine().equals(Auth.code)) 
                     out.println("El codigo que ingreso no es correcto, saldra del sistema");
-
+                */
                 //Luego de las verificaciones correspondientes ingresamos al menu del programa
                 boolean isUserAdmin = Decrypt.decryptText(credentialProps.getProperty(username+".rol")).equals("admin");
                 LOG.info("El usuario ingresado es admin?: "+isUserAdmin);
                 
-                LOG.info("Ingreso al menu del programa");
-                if(isUserAdmin){
-                    out.println(Menu.displayAdminMenu());
-                } else{
-                    out.println(Menu.displayUserMenu());
-                }
                 String inputLine;
                 boolean activeFlag = true;
                 while (activeFlag&&clientSocket.isConnected()){
+                    LOG.info("Ingreso al menu del programa");
+                    if(isUserAdmin){
+                        out.println(AdminMenu.displayAdminMenu());
+                    } else{
+                        out.println(UserMenu.displayUserMenu());
+                    }
                     if((inputLine=in.readLine())!= null){
                         if(isUserAdmin){
                             //Menu para el administrador
@@ -139,13 +143,17 @@ public class UserThread extends Thread{
                            System.out.println("--->"+inputLine);
                             switch(inputLine.trim()){
                                 case "1":
-                                    out.println("Ha seleccionado Actualización de datos del empleado");
+                                    //out.println("Ha seleccionado Actualización de datos del empleado");
+                                    LocalDate modificationDate = LocalDate.now();
+                                    UserMenu.updateEmployee(out, in, username, modificationDate);
                                     break;
                                 case "2":
                                     out.println("Ha seleccionado Desactivación de empleados por despido");
                                     break;
                                 case "3":
-                                    out.println("Ha seleccionado Contratación de empleados");
+                                    //out.println("Ha seleccionado Contratación de empleados");
+                                    LocalDate creationDate = LocalDate.now();
+                                    UserMenu.hireEmployee(out, in, username, creationDate);
                                     break;
                                 case "4":
                                     out.println("Ha seleccionado Asignación de departamento");
@@ -179,7 +187,7 @@ public class UserThread extends Thread{
             }
         } catch (SocketException ex) {
             Logger.getLogger(UserThread.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IOException ex) {
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
             Logger.getLogger(UserThread.class.getName()).log(Level.SEVERE, null, ex);
         } finally {
             try {

@@ -10,7 +10,6 @@ import app.echolab.utilities.Decrypt;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.Properties;
 import java.util.logging.Level;
@@ -27,32 +26,32 @@ public class ConnectionDB {
     private static BasicDataSource basicDataSource;
     
     private ConnectionDB(){
-    }
-    
-    public static void loadConnection(String User, String Password){
         Properties dbProps = new Properties();
         try(InputStream propertyFile = ConfigProperties.getResourceAsInputStream("dbConfig.properties")){
             dbProps.load(propertyFile);
         } catch (IOException ex) {
             Logger.getLogger(ConnectionDB.class.getName()).log(Level.SEVERE, null, ex);
         }
+        String user = Decrypt.decryptText(dbProps.getProperty("user"));
+        String password = Decrypt.decryptText(dbProps.getProperty("psswd"));
         String url = Decrypt.decryptText(dbProps.getProperty("url"));
         String driver = Decrypt.decryptText(dbProps.getProperty("driver"));
         basicDataSource = new BasicDataSource();
         basicDataSource.setDriverClassName(driver);
-        basicDataSource.setUsername(User);
-        basicDataSource.setPassword(Password);
+        basicDataSource.setUsername(user);
+        basicDataSource.setPassword(password);
         basicDataSource.setUrl(url);
         basicDataSource.setInitialSize(4); //The initial number of connections that are created when the pool is started. 
         basicDataSource.setMaxTotal(10); //The maximum number of active connections that can be allocated from this pool at the same time, or negative for no limit.
         basicDataSource.setMaxIdle(8);
     }
+
     
     public static ConnectionDB getInstance(){
         return main;
     }
     
-    public static Connection openConnection() throws SQLException, ClassNotFoundException{
+    public Connection openConnection() throws SQLException, ClassNotFoundException{
         return basicDataSource.getConnection();
     }
     

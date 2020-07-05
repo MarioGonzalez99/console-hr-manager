@@ -22,9 +22,6 @@ and open the template in the editor.
             <pattern>%d [%thread] %-5level %logger{35} - %msg%n</pattern>
         </encoder>
     </appender>
-    <logger name="app.echolab.main" level="INFO">
-        <appender-ref ref="FILE"/>
-    </logger>
     <root level="INFO">
         <appender-ref ref="FILE" />
     </root>

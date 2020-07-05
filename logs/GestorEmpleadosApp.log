@@ -1,0 +1,10 @@
+2020-07-02 18:52:35,114 [main] INFO  app.echolab.main.Main - Creacion de propiedad active con valor true
+2020-07-02 18:52:35,114 [main] INFO  app.echolab.main.Main - Creacion de propiedad active con valor true
+2020-07-02 18:52:35,117 [main] INFO  app.echolab.main.Main - Creacion de nuevo directorio y fichero de propiedades
+2020-07-02 18:52:35,117 [main] INFO  app.echolab.main.Main - Creacion de nuevo directorio y fichero de propiedades
+2020-07-02 18:52:35,118 [main] INFO  app.echolab.main.Main - Creacion de outputStream con destino al fichero de propiedades
+2020-07-02 18:52:35,118 [main] INFO  app.echolab.main.Main - Creacion de outputStream con destino al fichero de propiedades
+2020-07-02 18:52:35,130 [main] INFO  app.echolab.main.Main - Creacion de socket en el puerto 8888
+2020-07-02 18:52:35,130 [main] INFO  app.echolab.main.Main - Creacion de socket en el puerto 8888
+2020-07-02 18:52:35,131 [main] INFO  app.echolab.main.Main - Creacion de un nuevo Thread de usuario
+2020-07-02 18:52:35,131 [main] INFO  app.echolab.main.Main - Creacion de un nuevo Thread de usuario
