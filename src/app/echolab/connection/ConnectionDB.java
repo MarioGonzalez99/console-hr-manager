@@ -41,9 +41,9 @@ public class ConnectionDB {
         basicDataSource.setUsername(user);
         basicDataSource.setPassword(password);
         basicDataSource.setUrl(url);
-        basicDataSource.setInitialSize(4); //The initial number of connections that are created when the pool is started. 
-        basicDataSource.setMaxTotal(10); //The maximum number of active connections that can be allocated from this pool at the same time, or negative for no limit.
-        basicDataSource.setMaxIdle(8);
+        basicDataSource.setInitialSize(5); //The initial number of connections that are created when the pool is started. 
+        basicDataSource.setMaxTotal(20); //The maximum number of active connections that can be allocated from this pool at the same time, or negative for no limit.
+        basicDataSource.setMaxIdle(10);
     }
 
     
