@@ -35,6 +35,26 @@ public class Payroll {
     }
     public Payroll(){}
 
+    public Payroll(int idEmployee, LocalDate payrollDate, double baseSalary, LocalDate creationDate, String createdBy){
+        this.idEmployee = idEmployee;
+        this.payrollDate = payrollDate;
+        this.baseSalary = baseSalary;
+        this.afpTax = this.baseSalary * (0.0725);
+        this.isssTax = this.baseSalary * (0.03);
+        if(this.baseSalary<472.01){
+            this.rentTax = 0; 
+        } else if(this.baseSalary>=472.01 && this.baseSalary<895.25){
+            this.rentTax = (this.baseSalary-this.afpTax-this.isssTax) * (0.1); 
+        } else if(this.baseSalary>=895.251 && this.baseSalary<2038.11){
+            this.rentTax = (this.baseSalary-this.afpTax-this.isssTax) * (0.2); 
+        } else {
+            this.rentTax = (this.baseSalary-this.afpTax-this.isssTax) * (0.3); 
+            
+        }
+        this.netSalary = this.baseSalary - this.afpTax - this.isssTax - this.rentTax;
+        this.creationDate = creationDate;
+        this.createdBy = createdBy;
+    }
     public int getIdEmployee() {
         return idEmployee;
     }

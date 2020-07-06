@@ -152,16 +152,15 @@ public class UserThread extends Thread{
                                     UserMenu.hireEmployee(out, in, username, creationDate);
                                     break;
                                 case "3":
-                                    out.println("Ha seleccionado Actualización de salario mensual");
+                                    //out.println("Ha seleccionado Actualización de salario mensual");
+                                    LocalDate modDate  = LocalDate.now();
+                                    UserMenu.modifyPayroll(out, in, username, modDate);
                                     break;
                                 case "4":
                                     //out.println("Ha seleccionado Visualización de pagos generados");
                                     UserMenu.showPayroll(out, in);
                                     break;
                                 case "5":
-                                    out.println("Ha seleccionado Generación de pagos en planilla");
-                                    break;
-                                case "6":
                                     out.println("Ha seleccionado Salir del programa #"
                                             + "A continuacion, saldra del programa #"
                                             + "Tenga un buen dia");

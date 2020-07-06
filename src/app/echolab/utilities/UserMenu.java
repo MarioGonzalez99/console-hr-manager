@@ -34,8 +34,7 @@ public class UserMenu {
                                 + "2. Contratación de empleados #"
                                 + "3. Actualización de salario mensual #"
                                 + "4. Visualización de pagos generados #"
-                                + "5. Generación de pagos en planilla#"
-                                + "6. Salir del sistema";
+                                + "5. Salir del sistema";
     }
     
     public static void showPayroll(PrintWriter out, BufferedReader in){
@@ -81,6 +80,30 @@ public class UserMenu {
         }
     }
     
+    public static void modifyPayroll(PrintWriter out, BufferedReader in, String username, LocalDate modificationDate){
+        try {
+            PayrollDAO payrollDAO = new PayrollDAO();
+            out.println("Ha seleccionado Actualización de salario mensual #"
+                    + "Por favor, ingrese el ID del empleado que desea modificar: ");
+            int idEmployee = Integer.parseInt(in.readLine());
+            out.println("Por favor, seleccione la fecha a partir de la cual se generara la planilla: #"
+                    + "Año(yyyy): ");
+            int pYear = Integer.parseInt(in.readLine());
+            out.println("Mes(MM): ");
+            int pMonth = Integer.parseInt(in.readLine());
+            out.println("Dia(dd): ");
+            int pDay = Integer.parseInt(in.readLine());
+            LocalDate payrollDate = LocalDate.of(pYear, pMonth, pDay);
+            out.println("Ingrese el salario base mensual del empleado: ");
+            double baseSalary = Double.parseDouble(in.readLine());
+            Payroll p = new Payroll(idEmployee, payrollDate, baseSalary, modificationDate, username);
+            payrollDAO.insertData(p);
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
+            java.util.logging.Logger.getLogger(UserMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
+    
     public static void hireEmployee(PrintWriter out, BufferedReader in, String username, LocalDate creationDate){
         try {
             EmployeeDAO employeeDAO = new EmployeeDAO();
@@ -119,8 +142,6 @@ public class UserMenu {
                 String departmentName = in.readLine();
                 out.println("Por favor, ingrese el ID del jefe del empleado ");
                 int idSuper = Integer.parseInt(in.readLine());
-                out.println("Por favor, ingrese el Salario Base del empleado ");
-                int salary = Integer.parseInt(in.readLine());
                 
                 Employee e = new Employee(idEmployee, firstName, lastName, gender, email, birthDate, hireDate, idState, departmentName, idSuper, creationDate, username);
                 out.println("El empleado sera registrado como: #"
