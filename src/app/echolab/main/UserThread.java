@@ -72,7 +72,7 @@ public class UserThread extends Thread{
             }
             
             if(isValidUser){
-                /*
+                
                 LOG.info("Es un usuario valido");
                 //Almacenamos el email del usuario para enviarle un codigo de autenticacion
                 LOG.info("Ingreso de email del usuario");
@@ -98,7 +98,7 @@ public class UserThread extends Thread{
                 LOG.info("Ingreso de codigo de autenticacion");     
                 if(!in.readLine().equals(Auth.code)) 
                     out.println("El codigo que ingreso no es correcto, saldra del sistema");
-                */
+                
                 //Luego de las verificaciones correspondientes ingresamos al menu del programa
                 boolean isUserAdmin = Decrypt.decryptText(credentialProps.getProperty(username+".rol")).equals("admin");
                 LOG.info("El usuario ingresado es admin?: "+isUserAdmin);
