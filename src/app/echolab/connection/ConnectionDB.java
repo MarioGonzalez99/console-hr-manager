@@ -46,13 +46,14 @@ public class ConnectionDB {
         basicDataSource.setMaxIdle(10);
     }
 
+
     
     public static ConnectionDB getInstance(){
         return main;
     }
-    
+
     public Connection openConnection() throws SQLException, ClassNotFoundException{
-        return basicDataSource.getConnection();
+         return basicDataSource.getConnection();
     }
     
     public static void closeConnection(Connection con) throws SQLException{

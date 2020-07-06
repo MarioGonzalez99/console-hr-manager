@@ -8,14 +8,13 @@ package app.echolab.dao;
 import app.echolab.entities.Employee;
 import java.sql.*;
 import java.time.LocalDate;
-import java.util.List;
 
 /**
  *
  * @author Mario
  */
 public class EmployeeDAO extends AbstractDAO<Employee>{
-        @Override
+    @Override
     public String getTableName() {
         return "REG_EMP_EMPLEADO";
     }
@@ -23,11 +22,6 @@ public class EmployeeDAO extends AbstractDAO<Employee>{
     @Override
     public String getTableKey() {
         return "EMP_ID";
-    }
-    
-    @Override
-    protected String getSchema() {
-        return "GESTION_EMPLEADOS";
     }
 
     @Override
@@ -70,8 +64,8 @@ public class EmployeeDAO extends AbstractDAO<Employee>{
         ps.setInt(      10, entity.getIdSuper());
         ps.setObject(   11, entity.getCreationDate());
         ps.setString(   12, entity.getCreatedBy());
-        ps.setObject(   13, null);
-        ps.setString(   14, null);
+        ps.setObject(   13, entity.getCreationDate());
+        ps.setString(   14, entity.getCreatedBy());
     }
 
 

@@ -23,25 +23,23 @@ import org.slf4j.LoggerFactory;
  */
 public class UserMenu {
     private static final Logger LOG = LoggerFactory.getLogger(UserMenu.class);
-    private static final EmployeeDAO employeeDAO = new EmployeeDAO();
-    private static List<Employee> employees;
+    
 
     public static String displayUserMenu(){
         return "Ha ingresado correctamente al sistema como agente de RRHH #"
                                 + "Que accion deseas realizar? #"
                                 + "1. Actualización de datos del empleado #"
-                                + "2. Desactivación de empleados por despido #"
-                                + "3. Contratación de empleados #"
-                                + "4. Asignación de departamento #"
-                                + "5. Asignación de Jefaturas #"
-                                + "6. Actualización de salario mensual #"
-                                + "7. Visualización de pagos generados #"
-                                + "8. Generación de pagos en planilla#"
-                                + "9. Salir del sistema";
+                                + "2. Contratación de empleados #"
+                                + "3. Actualización de salario mensual #"
+                                + "4. Visualización de pagos generados #"
+                                + "5. Generación de pagos en planilla#"
+                                + "6. Salir del sistema";
     }
     
     public static void hireEmployee(PrintWriter out, BufferedReader in, String username, LocalDate creationDate){
         try {
+            EmployeeDAO employeeDAO = new EmployeeDAO();
+            List<Employee> employees;
             boolean isAddingUser = true;
             do{
                 out.println("Ha seleccionado Contratación de empleados #"
@@ -94,14 +92,16 @@ public class UserMenu {
             java.util.logging.Logger.getLogger(UserMenu.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    public static void updateEmployee(PrintWriter out, BufferedReader in, String username, LocalDate modificationDate) throws ClassNotFoundException, SQLException{
-        employees = employeeDAO.getAllData();
-        int numOfEmployees = employees.size()-1;
-        out.println("Ha seleccionado Actualización de datos del empleado #"
-                + "Por favor, ingrese el ID (1-"+numOfEmployees+") del empleado que desea modificar: ");
-        boolean isUpdating = true;
-        int idEmployee;
+    public static void updateEmployee(PrintWriter out, BufferedReader in, String username, LocalDate modificationDate) {
         try {
+            EmployeeDAO employeeDAO = new EmployeeDAO();
+            List<Employee> employees;
+            employees = employeeDAO.getAllData();
+            int numOfEmployees = employees.size()-1;
+            out.println("Ha seleccionado Actualización de datos del empleado #"
+                    + "Por favor, ingrese el ID (1-"+numOfEmployees+") del empleado que desea modificar: ");
+            boolean isUpdating = true;
+            int idEmployee;
             do{
                 idEmployee = Integer.parseInt(in.readLine());
                 if(idEmployee==-1) return;
@@ -120,7 +120,7 @@ public class UserMenu {
                             + "4. Email #"
                             + "5. Fecha de nacimiento #"
                             + "6. Fecha de contratacion #"
-                            + "7. Id del estado #"
+                            + "7. Id del estado del empleado (1- Activo, 2-Inactivo) #"
                             + "8. Nombre del departamento #"
                             + "9. ID del jefe #"
                             + "q. Salir de la operacion");

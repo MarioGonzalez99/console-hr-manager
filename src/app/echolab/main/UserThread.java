@@ -118,7 +118,9 @@ public class UserThread extends Thread{
                             System.out.println("--->"+inputLine);
                             switch(inputLine.trim()){
                                 case "1":
-                                    out.println("Ha seleccionado Gestion de departamentos");
+                                    //out.println("Ha seleccionado Gestion de departamentos");
+                                    LocalDate creationDate = LocalDate.now();
+                                    AdminMenu.departmentManager(out, in, username, creationDate);
                                     break;
                                 case "2":
                                     out.println("Ha seleccionado Gestion de estados de empleados");
