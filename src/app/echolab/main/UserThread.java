@@ -118,15 +118,17 @@ public class UserThread extends Thread{
                             System.out.println("--->"+inputLine);
                             switch(inputLine.trim()){
                                 case "1":
-                                    //out.println("Ha seleccionado Gestion de departamentos");
                                     LocalDate creationDate = LocalDate.now();
                                     AdminMenu.departmentManager(out, in, username, creationDate);
                                     break;
                                 case "2":
-                                    out.println("Ha seleccionado Gestion de estados de empleados");
+//                                    out.println("Ha seleccionado Gestion de estados de empleados");
+                                    LocalDate createDate = LocalDate.now();
+                                    AdminMenu.stateEmployeeManager(out, in, username, createDate);
                                     break;
                                 case "3":
-                                    out.println("Ha seleccionado Gestion de usuarios");
+//                                    out.println("Ha seleccionado Gestion de usuarios");
+                                    isUserAdmin = false;
                                     break;
                                 case "4":
                                     out.println("Ha seleccionado Salir del programa #"
@@ -142,22 +144,18 @@ public class UserThread extends Thread{
                            System.out.println("--->"+inputLine);
                             switch(inputLine.trim()){
                                 case "1":
-                                    //out.println("Ha seleccionado Actualización de datos del empleado");
                                     LocalDate modificationDate = LocalDate.now();
                                     UserMenu.updateEmployee(out, in, username, modificationDate);
                                     break;
                                 case "2":
-                                    //out.println("Ha seleccionado Contratación de empleados");
                                     LocalDate creationDate = LocalDate.now();
                                     UserMenu.hireEmployee(out, in, username, creationDate);
                                     break;
                                 case "3":
-                                    //out.println("Ha seleccionado Actualización de salario mensual");
                                     LocalDate modDate  = LocalDate.now();
                                     UserMenu.modifyPayroll(out, in, username, modDate);
                                     break;
                                 case "4":
-                                    //out.println("Ha seleccionado Visualización de pagos generados");
                                     UserMenu.showPayroll(out, in);
                                     break;
                                 case "5":

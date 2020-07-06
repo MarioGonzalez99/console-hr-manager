@@ -11,23 +11,35 @@ import java.time.LocalDate;
  *
  * @author Mario
  */
-public class Department {
-    private String depName;
+public class State {
+    private int idState;
+    private String nameState;
     private LocalDate creationDate;
     private String createdBy;
 
-    public Department(String depName, LocalDate creationDate, String createdBy) {
-        this.depName = depName;
+    public State(int idState, String nameState, LocalDate creationDate, String createdBy) {
+        this.idState = idState;
+        this.nameState = nameState;
         this.creationDate = creationDate;
         this.createdBy = createdBy;
     }
+    
+    public State(){}
 
-    public String getDepName() {
-        return depName;
+    public int getIdState() {
+        return idState;
     }
 
-    public void setDepName(String depName) {
-        this.depName = depName;
+    public void setIdState(int idState) {
+        this.idState = idState;
+    }
+
+    public String getNameState() {
+        return nameState;
+    }
+
+    public void setNameState(String nameState) {
+        this.nameState = nameState;
     }
 
     public LocalDate getCreationDate() {
@@ -48,6 +60,6 @@ public class Department {
     
     @Override
     public String toString(){
-        return depName;
+        return nameState;
     }
 }
