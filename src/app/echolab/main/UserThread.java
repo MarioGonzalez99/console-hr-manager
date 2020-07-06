@@ -129,9 +129,6 @@ public class UserThread extends Thread{
                                     out.println("Ha seleccionado Gestion de usuarios");
                                     break;
                                 case "4":
-                                    out.println("Ha seleccionado Gestion de roles");
-                                    break;
-                                case "5":
                                     out.println("Ha seleccionado Salir del programa #"
                                             + "A continuacion, saldra del programa #"
                                             + "Tenga un buen dia");

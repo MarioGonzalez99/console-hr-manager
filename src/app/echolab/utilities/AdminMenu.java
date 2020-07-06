@@ -29,8 +29,7 @@ public class AdminMenu {
                                 + "1. Gestion de departamentos #"
                                 + "2. Gestion de estados de empleados #"
                                 + "3. Gestion de usuarios #"
-                                + "4. Gestion de roles #"
-                                + "5. Salir del programa";
+                                + "4. Salir del programa";
     }
     
     public static void departmentManager(PrintWriter out, BufferedReader in, String username, LocalDate creationDate) throws IOException, ClassNotFoundException, SQLException{
