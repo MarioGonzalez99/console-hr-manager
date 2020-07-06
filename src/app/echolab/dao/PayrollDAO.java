@@ -6,10 +6,13 @@
 package app.echolab.dao;
 
 import app.echolab.entities.Payroll;
+import static java.lang.String.valueOf;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,7 +28,11 @@ public class PayrollDAO extends AbstractDAO<Payroll>{
     public String getTableKey() {
         return "EMP_ID";
     }
-
+    
+    @Override
+    protected String getTableKey2() {
+        return "PLAN_FECHA_PLANILLA";
+    }
     @Override
     public String[] getTableColumns() {
         String[] str = {"EMP_ID","PLAN_FECHA_PLANILLA","PLAN_SALARIO_BASE","PLAN_MONTO_DESCUENTO_AFP","PLAN_MONTO_DESCUENTO_ISSS",
@@ -79,5 +86,14 @@ public class PayrollDAO extends AbstractDAO<Payroll>{
         ps.setObject(   10, modificationDate);
         ps.setString(   11, userModify);
         ps.setInt(      12, entity.getIdEmployee());
+    }
+    
+    public List<Payroll> getHistoryPayroll(int idEmployee) throws ClassNotFoundException, SQLException{
+        List<Payroll> list = getAllData();
+        List<Payroll> result = new ArrayList<>();
+        list.stream().filter(p -> (p.toString().contains("ID: "+String.valueOf(idEmployee)))).forEachOrdered(p -> {
+            result.add(p);
+         });
+        return result;
     }
 }

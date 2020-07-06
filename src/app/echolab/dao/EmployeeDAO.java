@@ -23,7 +23,12 @@ public class EmployeeDAO extends AbstractDAO<Employee>{
     public String getTableKey() {
         return "EMP_ID";
     }
-
+    
+    @Override
+    protected String getTableKey2() {
+        return null;
+    }
+    
     @Override
     public String[] getTableColumns() {
         String[] str = {"EMP_ID","EMP_NOMBRE","EMP_APELLIDO","EMP_GENERO","EMP_CORREO",

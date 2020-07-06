@@ -6,7 +6,9 @@
 package app.echolab.utilities;
 
 import app.echolab.dao.EmployeeDAO;
+import app.echolab.dao.PayrollDAO;
 import app.echolab.entities.Employee;
+import app.echolab.entities.Payroll;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -36,10 +38,52 @@ public class UserMenu {
                                 + "6. Salir del sistema";
     }
     
+    public static void showPayroll(PrintWriter out, BufferedReader in){
+        try {
+            PayrollDAO payrollDAO = new PayrollDAO();
+            out.println("Ha seleccionado Visualizacion de pagos #"
+                    + "Por favor, ingrese el ID del empleado: ");
+            int idEmployee = Integer.parseInt(in.readLine());
+            out.println("Digite la operacion que quiera realizar: #"
+                    + "1. Visualizar una planilla en especifico #"
+                    + "2. Visualizar todas las planillas #"
+                    + "3. Salir al menu");
+            String resp = in.readLine();
+            if(resp.equals("1")){
+                out.println("Por favor, ingrese la fecha de la planilla#"
+                            + "Año(yyyy): ");
+                int pYear = Integer.parseInt(in.readLine());
+                out.println("Mes(MM): ");
+                int pMonth = Integer.parseInt(in.readLine());
+                out.println("Dia(dd): ");
+                int pDay = Integer.parseInt(in.readLine());
+                LocalDate payrollDate = LocalDate.of(pYear, pMonth, pDay);
+                Payroll ePayroll = payrollDAO.getByIDData(idEmployee, payrollDate);
+                out.println("La planilla seleccionada es la siguiente: #"
+                        +ePayroll+" #"
+                                + "Desea continuar? (Si/No)");
+            } else if (resp.equals("2")){
+                List<Payroll> result = payrollDAO.getHistoryPayroll(idEmployee);
+                StringBuilder historyPayroll = new StringBuilder();
+                result.stream().map(p -> {
+                    historyPayroll.append(p);
+                    return p;
+                }).forEachOrdered(_item -> {
+                    historyPayroll.append("#");
+                });
+                out.println("Las planillas del empleado son: #"
+                        + historyPayroll.toString() +" #"
+                        + "Desea continuar? (Si/No)");
+            }
+            in.readLine();
+        } catch (IOException | ClassNotFoundException | SQLException ex) {
+            java.util.logging.Logger.getLogger(UserMenu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    
     public static void hireEmployee(PrintWriter out, BufferedReader in, String username, LocalDate creationDate){
         try {
             EmployeeDAO employeeDAO = new EmployeeDAO();
-            List<Employee> employees;
             boolean isAddingUser = true;
             do{
                 out.println("Ha seleccionado Contratación de empleados #"

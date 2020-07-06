@@ -155,7 +155,8 @@ public class UserThread extends Thread{
                                     out.println("Ha seleccionado Actualización de salario mensual");
                                     break;
                                 case "4":
-                                    out.println("Ha seleccionado Visualización de pagos generados");
+                                    //out.println("Ha seleccionado Visualización de pagos generados");
+                                    UserMenu.showPayroll(out, in);
                                     break;
                                 case "5":
                                     out.println("Ha seleccionado Generación de pagos en planilla");

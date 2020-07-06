@@ -263,10 +263,28 @@ public abstract class AbstractDAO<T>{
      * @throws SQLException
      */
     public T getByIDData(Object id) throws ClassNotFoundException, SQLException {
-        String sql = getSelectSQL() + SQL_WHERE + getTableKey() + " = ?"; //Se juega con el SQL dinámico
+        return getByIDData(id, null);
+    }
+    
+         /**
+     * Función que nos devuelve la información de una entidad (registro) filtrado por el ID de la entidad
+     * @param id El ID será un valor Object para soportar cualquier tipo de dato
+     * @param id2 ID en caso de llave compuesta
+     * @return La entidad T
+     * @throws ClassNotFoundException 
+     * @throws SQLException
+     */
+    public T getByIDData(Object id, Object id2) throws ClassNotFoundException, SQLException {
+        String sql = getSelectSQL() + SQL_WHERE + getTableKey() + " = ?";
+        if(id2 != null)
+            sql = getSelectSQL() + SQL_WHERE + getTableKey() + " = ? AND " + getTableKey2() + " = ?"; //Se juega con el SQL dinámico
+        
         Connection con = getConnection(); //Se obtiene la conexión
         PreparedStatement ps = con.prepareStatement(sql); //Se prepara el Statement
         ps.setObject(1, id); //Se aplican los parametros
+        if(id2 != null)
+            ps.setObject(2, id2); //Se aplican los parametros
+        
         ResultSet rs = ps.executeQuery(); //Se ejecuta y se utiliza un ResultSet para obtener los valores
         T e = null;
         if(rs.next()){ //Si la BD devolvio coincidencias (Registros)
@@ -383,5 +401,9 @@ public abstract class AbstractDAO<T>{
      * @return String columna llave
      */  
     protected abstract String getTableKey();
-    
+    /**
+     * Función abstracta que devuelve el nombre de la segunda columna primaria en la tabla
+     * @return String columna llave
+     */  
+    protected abstract String getTableKey2();
 }

@@ -17,7 +17,7 @@ import java.time.LocalDate;
  */
 public class DepartmentDAO extends AbstractDAO<Department> {
 
-        @Override
+    @Override
     public String getTableName() {
         return "REG_DEP_DEPARTAMENTO";
     }
@@ -25,6 +25,11 @@ public class DepartmentDAO extends AbstractDAO<Department> {
     @Override
     public String getTableKey() {
         return "DEP_NOMBRE";
+    }
+    
+    @Override
+    protected String getTableKey2() {
+        return null;
     }
 
     @Override
