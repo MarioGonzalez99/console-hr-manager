@@ -148,29 +148,20 @@ public class UserThread extends Thread{
                                     UserMenu.updateEmployee(out, in, username, modificationDate);
                                     break;
                                 case "2":
-                                    out.println("Ha seleccionado Desactivación de empleados por despido");
-                                    break;
-                                case "3":
                                     //out.println("Ha seleccionado Contratación de empleados");
                                     LocalDate creationDate = LocalDate.now();
                                     UserMenu.hireEmployee(out, in, username, creationDate);
                                     break;
-                                case "4":
-                                    out.println("Ha seleccionado Asignación de departamento");
-                                    break;
-                                case "5":
-                                    out.println("Ha seleccionado Asignación de Jefaturas");
-                                    break;
-                                case "6":
+                                case "3":
                                     out.println("Ha seleccionado Actualización de salario mensual");
                                     break;
-                                case "7":
+                                case "4":
                                     out.println("Ha seleccionado Visualización de pagos generados");
                                     break;
-                                case "8":
+                                case "5":
                                     out.println("Ha seleccionado Generación de pagos en planilla");
                                     break;
-                                case "9":
+                                case "6":
                                     out.println("Ha seleccionado Salir del programa #"
                                             + "A continuacion, saldra del programa #"
                                             + "Tenga un buen dia");
